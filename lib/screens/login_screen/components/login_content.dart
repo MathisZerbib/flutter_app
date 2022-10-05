@@ -1,5 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_app/screens/login_screen/animations/change_screen_animation.dart';
 import 'package:flutter_app/utils/constants.dart';
 import 'package:flutter_app/utils/helper_functions.dart';
@@ -149,14 +149,7 @@ class _LoginContentState extends State<LoginContent>
     );
   }
 
-  Future signIn() async {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email:
-          // '123@gmail.com',
-          // '123456'
-         emailController.text.trim(),
-        password:  passwordController.text.trim(),
-      );
-  }
+
 
   Widget orDivider() {
     return Padding(
@@ -207,6 +200,7 @@ class _LoginContentState extends State<LoginContent>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(width: 5),
               Image.asset('assets/images/facebook.png'),
               const SizedBox(width: 5),
               Image.asset('assets/images/google.png'),
@@ -317,4 +311,23 @@ class _LoginContentState extends State<LoginContent>
       ],
     );
   }
+
+    Future signIn() async {
+    showDialog(context: context,
+        builder: (context)=> Center(child:
+          CircularProgressIndicator()
+        ),
+    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email:
+      // '123@gmail.com',
+      // '123456'
+      emailController.text.trim(),
+        password:  passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+      navigatorKey.currentState!.popUntil((route)=> route.isFirst);
+    }
 }

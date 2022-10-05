@@ -8,12 +8,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a23a2fb9-d550-40c6-9269-309547084b2f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/screens/home_screen/components/home_content.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/home_screen/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/flutter_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flutter_app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/home_screen/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home_screen/home_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/login_screen/animations/change_screen_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login_screen/animations/change_screen_animation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/login_screen/components/login_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/login_screen/components/login_content.dart" afterDir="false" />
     </list>

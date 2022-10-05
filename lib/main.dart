@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/home_screen/home_screen.dart';
+import 'package:flutter_app/screens/login_screen/components/login_content.dart';
 import 'package:flutter_app/screens/login_screen/login_screen.dart';
 import 'package:flutter_app/utils/constants.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,8 @@ Future main() async {
 }
 
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -23,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'New Custom App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -45,13 +49,17 @@ class MyApp extends StatelessWidget {
           body: StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return MaterialApp(
-                      home: HomeScreen()
-                  );
-                } else {
-                  return MaterialApp(home: LoginScreen());
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }else if(snapshot.hasError) {
+                  return Center(child: Text('Something went wrong !'));
                 }
+                else if (snapshot.hasData) {
+                  return HomeScreen();
+                }else{
+                  return LoginContent();
+                }
+
               }
           ),
         );
