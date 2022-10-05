@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main.dart';
-import 'package:flutter_app/screens/login_screen/login_screen.dart';
 import 'dart:math' as math;
 
 import '../login_screen/components/center_widget/center_widget.dart';
@@ -38,36 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             child: logOutWidget(user),
           ),
-          // Positioned(
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Text(
-          //         'Signed In as',
-          //         style: TextStyle(fontSize: 16),
-          //       ),
-          //       SizedBox(height: 8),
-          //       Text(
-          //         user.email!,
-          //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          //       ),
-          //       SizedBox(height: 40),
-          //       ElevatedButton.icon(
-          //         style: ElevatedButton.styleFrom(
-          //           minimumSize: Size.fromHeight(50),
-          //         ),
-          //         icon: Icon(Icons.arrow_back, size: 32),
-          //         label: Text(
-          //           'Sign Out',
-          //           style: TextStyle(fontSize: 24),
-          //         ),
-          //         onPressed: () {
-          //           logOut();
-          //         },
-          //       )
-          //     ],
-          //   ),
-          // )
         ],
       ),
     );

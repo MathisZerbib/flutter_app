@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/main.dart';
-import 'package:flutter_app/screens/login_screen/animations/change_screen_animation.dart';
 import 'package:flutter_app/utils/constants.dart';
 import 'package:flutter_app/utils/helper_functions.dart';
 import 'package:ionicons/ionicons.dart';
+import '../animations/change_screen_animation.dart';
 import 'bottom_text.dart';
 import 'top_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -148,6 +148,21 @@ class _LoginContentState extends State<LoginContent>
       ),
     );
   }
+    Widget signupButton(String title)  {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 135, vertical: 16),
+        child: ElevatedButton(
+          onPressed: signUp,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: const StadiumBorder(),
+            elevation: 8,
+            shadowColor: Colors.black87,
+          ),
+          child: Text(title),
+        ),
+      );
+    }
 
 
 
@@ -228,13 +243,14 @@ class _LoginContentState extends State<LoginContent>
     );
   }
 
+
   @override
   void initState() {
     _createAccountContent = [
       inputField('Name', Ionicons.person_outline),
       inputField('Email', Ionicons.mail_outline),
       inputField('Password', Ionicons.lock_closed_outline),
-      loginButton('Sign Up'),
+      signupButton('Sign Up'),
       orDivider(),
       logos(),
     ];
@@ -270,8 +286,6 @@ class _LoginContentState extends State<LoginContent>
   @override
   void dispose() {
     ChangeScreenAnimation.dispose();
-    emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 
@@ -328,6 +342,25 @@ class _LoginContentState extends State<LoginContent>
     } on FirebaseAuthException catch (e) {
       print(e);
     }
+      navigatorKey.currentState!.popUntil((route)=> route.isFirst);
+    }
+
+    Future signUp() async {
+      showDialog(context: context,
+        builder: (context)=> Center(child:
+        CircularProgressIndicator()
+        ),
+      );
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(email:
+        // '123@gmail.com',
+        // '123456'
+        emailController.text.trim(),
+          password:  passwordController.text.trim(),
+        );
+      } on FirebaseAuthException catch (e) {
+        print(e);
+      }
       navigatorKey.currentState!.popUntil((route)=> route.isFirst);
     }
 }

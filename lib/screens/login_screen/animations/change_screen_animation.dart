@@ -3,11 +3,11 @@ import 'package:flutter/animation.dart';
 import '../components/login_content.dart';
 
 class ChangeScreenAnimation {
-  static late AnimationController topTextController;
-  static late Animation<Offset> topTextAnimation;
+  static late final AnimationController topTextController;
+  static late final Animation<Offset> topTextAnimation;
 
-  static late  AnimationController bottomTextController;
-  static late  Animation<Offset> bottomTextAnimation;
+  static late final AnimationController bottomTextController;
+  static late final Animation<Offset> bottomTextAnimation;
 
   static final List<AnimationController> createAccountControllers = [];
   static final List<Animation<Offset>> createAccountAnimations = [];
@@ -88,14 +88,15 @@ class ChangeScreenAnimation {
 
   }
 
-  static void dispose() {
-    topTextController.dispose();
-    bottomTextController.dispose();
+  static void dispose(){
     for (final controller in [
-      ...createAccountControllers,
+    topTextController,
+    bottomTextController,
+    ...createAccountControllers,
       ...loginControllers,
 
     ]) {
+      print(controller);
       controller.dispose();
     }
   }
@@ -103,7 +104,7 @@ class ChangeScreenAnimation {
   static Future<void> forward() async {
     isPlaying = true;
 
-    await topTextController.forward();
+    topTextController.forward();
     await bottomTextController.forward();
     for (final controller in [
       ...createAccountControllers,
