@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/login_screen/animations/change_screen_animation.dart';
 import 'package:flutter_app/utils/constants.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_app/utils/helper_functions.dart';
 import 'package:ionicons/ionicons.dart';
 import 'bottom_text.dart';
 import 'top_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum Screens {
   createAccount,
@@ -19,42 +21,110 @@ class LoginContent extends StatefulWidget {
 }
 
 class _LoginContentState extends State<LoginContent>
-    with TickerProviderStateMixin {
-  late final List<Widget> createAccountContent;
-  late final List<Widget> loginContent;
+  with TickerProviderStateMixin {
+    late final List<Widget> createAccountContent;
+    late final List<Widget> loginContent;
+    final emailController  = TextEditingController();
+    final passwordController  = TextEditingController();
+    bool _isObscure = true;
 
   Widget inputField(String hint, IconData iconData) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
-      child: SizedBox(
-          height: 50,
-          child: Material(
-            elevation: 8,
-            shadowColor: Colors.black87,
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(30),
-            child: TextField(
-              textAlignVertical: TextAlignVertical.bottom,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
+    if(hint == 'Email') {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
+        child: SizedBox(
+            height: 50,
+            child: Material(
+              elevation: 8,
+              shadowColor: Colors.black87,
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(30),
+              child: TextField(
+                controller: emailController,
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: hint,
+                  prefixIcon: Icon(iconData),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: hint,
-                prefixIcon: Icon(iconData),
+              ),
+            )),
+      );
+    }
+      else if (hint == 'Password') {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
+        child: SizedBox(
+            height: 50,
+            child: Material(
+              elevation: 8,
+              shadowColor: Colors.black87,
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(30),
+              child: TextField(
+                obscureText: _isObscure,
+                controller: passwordController,
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: hint,
+                  prefixIcon: Icon(iconData),
+                  suffixIcon: IconButton(
+                      icon: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      })),
+                ),
               ),
             ),
-          )),
-    );
+      );
+    }else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 8),
+        child: SizedBox(
+            height: 50,
+            child: Material(
+              elevation: 8,
+              shadowColor: Colors.black87,
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(30),
+              child: TextField(
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: hint,
+                  prefixIcon: Icon(iconData),
+                ),
+              ),
+            )),
+      );
+    }
+
   }
 
-  Widget loginButton(String title) {
+  Widget loginButton(String title)  {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 135, vertical: 16),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: signIn,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: const StadiumBorder(),
@@ -64,6 +134,15 @@ class _LoginContentState extends State<LoginContent>
         child: Text(title),
       ),
     );
+  }
+
+  Future signIn() async {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email:
+          // '123@gmail.com',
+          // '123456'
+         emailController.text.trim(),
+        password:  passwordController.text.trim(),
+      );
   }
 
   Widget orDivider() {
@@ -184,6 +263,8 @@ class _LoginContentState extends State<LoginContent>
   @override
   void dispose() {
     ChangeScreenAnimation.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 

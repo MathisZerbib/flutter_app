@@ -36,9 +36,29 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_core: ^1.24.0
+  firebase_auth: ^3.11.1
   ionicons: ^0.1.2
 
+
 dev_dependencies:
+  flutter_launcher_icons: "^0.10.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/facebook.png"
+#  min_sdk_android: 21 # android min sdk min:16, default 21
+#  web:
+#    generate: true
+#    image_path: "assets/images/facebook.png"
+#    background_color: "#hexcode"
+#    theme_color: "#hexcode"
+#  windows:
+#    generate: true
+#    image_path: "assets/images/facebook.png"
+#    icon_size: 48 # min:48, max:256, default: 48
+
   flutter_test:
     sdk: flutter
 
