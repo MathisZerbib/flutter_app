@@ -89,8 +89,7 @@ class ChangeScreenAnimation {
   }
 
   static void dispose() {
-    topTextController.dispose();
-    bottomTextController.dispose();
+
     for (final controller in [
       topTextController,
       bottomTextController,
@@ -111,6 +110,7 @@ class ChangeScreenAnimation {
       ...createAccountControllers,
       ...loginControllers,
     ]) {
+
       controller.forward();
       await Future.delayed(const Duration(milliseconds: 100));
     }

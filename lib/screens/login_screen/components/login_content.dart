@@ -22,11 +22,11 @@ class LoginContent extends StatefulWidget {
 
 class _LoginContentState extends State<LoginContent>
   with TickerProviderStateMixin {
-    late final List<Widget> createAccountContent;
+    late final List<Widget> _createAccountContent;
     late final List<Widget> loginContent;
     final emailController  = TextEditingController();
     final passwordController  = TextEditingController();
-    bool _isObscure = true;
+    bool _isHidden = true;
 
   Widget inputField(String hint, IconData iconData) {
     if(hint == 'Email') {
@@ -67,7 +67,7 @@ class _LoginContentState extends State<LoginContent>
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(30),
               child: TextField(
-                obscureText: _isObscure,
+                obscureText: _isHidden,
                 controller: passwordController,
                 textAlignVertical: TextAlignVertical.bottom,
                 decoration: InputDecoration(
@@ -80,16 +80,23 @@ class _LoginContentState extends State<LoginContent>
                   hintText: hint,
                   prefixIcon: Icon(iconData),
                   suffixIcon: IconButton(
-                      icon: Icon(
-                          _isObscure ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      })),
+                        icon: Icon(
+                            _isHidden ? Icons.visibility : Icons.visibility_off),
+                        onPressed: _togglePasswordView
+                        )),
+                  // suffix: InkWell(
+                  //   onTap: _togglePasswordView,
+                  //   child:
+                  //   Icon(
+                  //     _isHidden
+                  //         ? Icons.visibility
+                  //         : Icons.visibility_off,
+                  //   ),
+                  // ),
+                //),
+                ),
                 ),
               ),
-            ),
       );
     }else {
       return Padding(
@@ -118,6 +125,12 @@ class _LoginContentState extends State<LoginContent>
       );
     }
 
+  }
+
+  Future _togglePasswordView() async{
+    this.setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 
   Widget loginButton(String title)  {
@@ -223,7 +236,7 @@ class _LoginContentState extends State<LoginContent>
 
   @override
   void initState() {
-    createAccountContent = [
+    _createAccountContent = [
       inputField('Name', Ionicons.person_outline),
       inputField('Email', Ionicons.mail_outline),
       inputField('Password', Ionicons.lock_closed_outline),
@@ -241,13 +254,13 @@ class _LoginContentState extends State<LoginContent>
 
     ChangeScreenAnimation.initialize(
       vsync: this,
-      createAccountItems: createAccountContent.length,
+      createAccountItems: _createAccountContent.length,
       loginItems: loginContent.length,
     );
-    for (var i = 0; i < createAccountContent.length; i++) {
-      createAccountContent[i] = HelperFunctions.wrapWithAnimatedBuilder(
+    for (var i = 0; i < _createAccountContent.length; i++) {
+      _createAccountContent[i] = HelperFunctions.wrapWithAnimatedBuilder(
         animation: ChangeScreenAnimation.createAccountAnimations[i],
-        child: createAccountContent[i],
+        child: _createAccountContent[i],
       );
     }
 
@@ -273,7 +286,7 @@ class _LoginContentState extends State<LoginContent>
     return Stack(
       children: [
         const Positioned(
-          top: 136,
+          top: 130,
           left: 24,
           child: TopText(),
         ),
@@ -284,7 +297,7 @@ class _LoginContentState extends State<LoginContent>
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: createAccountContent,
+                children: _createAccountContent,
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
